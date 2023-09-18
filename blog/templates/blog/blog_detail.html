@@ -1,0 +1,16 @@
+{% extends 'catalog/base.html'%}
+{% load my_tags %}
+{% block content %}
+<div class="row text-center">
+    <div class="card" style="width: 18rem;">
+        <img src="{{ object.image|mediapath }}" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">{{object.name}} ({{ object.slug }})</h5>
+            <p class="card-text">{{object.content}}</p>
+            <p class="card-text">Просмотры: {{object.views_count}}</p>
+            <a href="{% url 'blog:list' %}" class="btn btn-primary">К блогам</a>
+
+        </div>
+    </div>
+</div>
+{% endblock%}

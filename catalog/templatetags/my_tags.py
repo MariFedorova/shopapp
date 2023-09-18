@@ -6,10 +6,10 @@ register= template.Library()
 def mediapath(val):
     if val:
         return f"/media/{val}"
-    return f"#"
+    return ""
 
 @register.simple_tag()
 def mediapath(val):
     if val:
         return f"/media/{val}"
-    return f"#"
+    return ""
