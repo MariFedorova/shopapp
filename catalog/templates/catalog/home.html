@@ -7,6 +7,11 @@
                 <div class="card-body">
                     <h4 class="card-title pricing-card-title">{{object.name}}</h4>
                     <h6 class="card-title pricing-card-title">{{object.description|truncatechars:100}}</h6>
+                    {% for version in object.versions.all %}
+                    {% if version.is_active %}
+                    <p> Версия {{ version.version_number }} </p>
+                    {% endif %}
+                    {% endfor %}
                     <a href="{% url 'catalog:product' object.id %}" class="btn btn-outline-primary">Подробнее</a>
                 </div>
             </div>
