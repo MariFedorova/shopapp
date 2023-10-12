@@ -1,6 +1,9 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView, CreateView, TemplateView, UpdateView, DeleteView
 
 from catalog.forms import ProductForm, VersionForm
@@ -41,10 +44,17 @@ class ProductDetailView(DetailView):
     #     return context_data
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:home')
+
+    def form_valid(self, form):
+        obj = form.save()
+        obj.user = self.request.user
+        obj.save()
+        return super().form_valid(form)
+
 
 
 # def contacts(request):
@@ -53,7 +63,7 @@ class ContactsTemplateView(TemplateView):
     template_name = 'catalog/contacts.html'
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin,UpdateView):
     model = Product
     template_name = 'catalog/product_update.html'
     form_class = ProductForm
@@ -79,6 +89,6 @@ class ProductUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('catalog:home')

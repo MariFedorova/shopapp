@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.shortcuts import render
 
 from django.shortcuts import render
@@ -6,6 +7,7 @@ from django.views.generic import ListView, DetailView, CreateView, TemplateView,
 from pytils.translit import slugify
 
 from blog.models import Blog
+from config import settings
 
 
 class BlogListView(ListView):

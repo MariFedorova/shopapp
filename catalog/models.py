@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 NULLABLE = {'blank': True, 'null': True}
 
 
@@ -24,6 +26,7 @@ class Product(models.Model):
     price = models.IntegerField(verbose_name='цена')
     creation_date = models.DateField(auto_now_add=True, verbose_name='дата создания')
     changes_date = models.DateField(auto_now_add=True, verbose_name='дата изменения')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         # Строковое отображение объекта
